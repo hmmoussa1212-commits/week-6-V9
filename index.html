@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Week 6">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#7dd3fc">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<title>Hadeer · Vacation Week 6</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{min-height:100%;overflow-x:hidden;overflow-y:auto;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#fff7ed;color:#111827;max-width:430px;margin:0 auto;min-height:100dvh;overflow-x:hidden;overflow-y:auto;padding-bottom:96px}
+.app{min-height:100dvh;overflow:visible;background:linear-gradient(180deg,#bdefff 0%,#fff7ed 28%,#fff 100%)}
+.beach-head{position:relative;min-height:178px;padding:24px 20px 18px;background:linear-gradient(180deg,#7dd3fc 0%,#bae6fd 44%,#fed7aa 100%);overflow:hidden}
+.beach-head:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 72% 48%,#fde68a 0 38px,transparent 39px),linear-gradient(180deg,transparent 55%,rgba(14,165,233,.25) 56%,rgba(14,165,233,.25) 62%,transparent 63%);opacity:.9}
+.beach-head:after{content:"🌴";position:absolute;right:-8px;top:-10px;font-size:74px;transform:rotate(8deg);opacity:.8}
+.topbar{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between}
+.circle-btn{width:54px;height:54px;border-radius:22px;border:none;background:rgba(255,255,255,.82);box-shadow:0 10px 22px rgba(0,0,0,.10);font-size:25px;color:#312e81}
+.hello{position:relative;z-index:1;margin-top:8px;color:#1e1b4b}
+.hello h1{font-size:28px;font-weight:800;letter-spacing:.2px}
+.hello p{font-size:17px;font-weight:650;margin-top:2px}
+.date-card{margin:-42px 20px 18px;position:relative;z-index:3;background:rgba(255,255,255,.92);backdrop-filter:blur(18px);border-radius:24px;box-shadow:0 16px 35px rgba(0,0,0,.12);padding:16px}
+.date-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center}
+.date-cell{display:flex;gap:10px;align-items:center}
+.date-icon{font-size:28px}
+.date-cell b{display:block;font-size:18px;color:#111827}
+.date-cell span{display:block;font-size:14px;color:#ec4899;font-weight:800;margin-top:2px}
+.date-cell.hijri{border-left:1px solid #e5e7eb;padding-left:15px}
+.date-cell.hijri span{color:#8b5cf6}
+.clock{text-align:center;margin-top:12px;padding-top:10px;border-top:1px solid #eee;color:#555;font-size:15px;font-weight:650}
+.rest-banner{margin:0 20px 18px;border-radius:24px;background:linear-gradient(135deg,#f5f3ff,#fdf2f8);border:1px solid #e9d5ff;padding:18px;display:flex;align-items:center;gap:14px;box-shadow:0 10px 26px rgba(168,85,247,.08)}
+.rest-banner .heart{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:#ede9fe;font-size:26px}
+.rest-banner p{font-size:20px;line-height:1.35;color:#312e81;font-style:italic;font-weight:650}
+.main-card{margin:0 16px 18px;background:rgba(255,255,255,.90);border-radius:28px;padding:18px;box-shadow:0 18px 40px rgba(0,0,0,.10)}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:0 16px 14px;scrollbar-width:none;position:sticky;top:0;z-index:20;background:rgba(255,247,237,.82);backdrop-filter:blur(12px)}
+.tabs::-webkit-scrollbar{display:none}
+.tab-btn{border:none;min-width:68px;border-radius:18px;padding:10px 8px;background:rgba(255,255,255,.78);color:#6d28d9;font-weight:900;box-shadow:0 6px 16px rgba(0,0,0,.06)}
+.tab-btn small{display:block;font-size:10px;color:#ec4899;margin-top:2px}
+.tab-btn.active{background:linear-gradient(135deg,#fb7185,#a78bfa);color:white}
+.tab-btn.active small{color:white}
+.day-panel{display:none}
+.day-panel.active{display:block}
+.today-title{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:14px}
+.today-title h2{font-size:34px;color:#ec4899;font-weight:800;font-family:cursive}
+.today-title p{font-size:12px;color:#6b7280;font-weight:700;margin-top:3px}
+.mode-pill{border:1.5px solid #fbcfe8;background:#fff;border-radius:999px;padding:10px 13px;color:#ec4899;font-weight:900}
+.hero-task{display:grid;grid-template-columns:74px 1fr auto;gap:14px;align-items:center;border:1px solid #f3d5e5;border-radius:22px;padding:15px;margin-bottom:14px;background:#fff}
+.hero-icon{width:64px;height:64px;border-radius:50%;background:#fce7f3;display:grid;place-items:center;font-size:34px}
+.hero-task span{font-size:16px;color:#ec4899;font-weight:900}
+.hero-task h3{font-size:19px;color:#111827;margin-top:4px}
+.hero-task p{font-size:13px;color:#4b5563;margin-top:4px;line-height:1.35}
+.hero-count{font-size:13px;color:#ec4899;border:1px solid #f9a8d4;border-radius:999px;padding:8px 10px;font-weight:900}
+.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.quick-grid button{border:1px solid #ddd6fe;border-radius:18px;background:linear-gradient(135deg,#eff6ff,#fdf2f8);padding:10px 5px;font-size:22px;color:#312e81;font-weight:900}
+.quick-grid span{display:block;font-size:11px;margin-top:4px}
+.now-next{display:grid;grid-template-columns:1fr 1fr;border:1px solid #a5f3fc;background:#ecfeff;border-radius:22px;overflow:hidden;margin-bottom:15px}
+.now-next div{padding:14px}
+.now-next div:first-child{border-right:1px solid #a5f3fc}
+.now-next b{display:block;color:#0891b2;font-size:16px;margin-bottom:5px}
+.now-next span{font-size:14px;color:#374151}
+.timeline{position:relative}
+.task-row{display:grid;grid-template-columns:52px 76px 18px 1fr 20px;gap:10px;align-items:center;min-height:76px;border-radius:18px;border:1.5px solid #e5e7eb;margin-bottom:8px;padding:9px;background:#fff;cursor:pointer}
+.task-row input{display:none}
+.task-row.work{background:linear-gradient(135deg,#eff6ff,#eef2ff);border-color:#bfdbfe}
+.task-row.joy{background:linear-gradient(135deg,#fff1f2,#fdf2f8);border-color:#fbcfe8}
+.task-row.soft{background:linear-gradient(135deg,#ecfeff,#f0fdfa);border-color:#99f6e4}
+.task-row:has(input:checked){opacity:.6;filter:saturate(.8)}
+.task-row:has(input:checked) .task-title{text-decoration:line-through}
+.task-icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:rgba(255,255,255,.65);font-size:22px}
+.task-time{font-size:13px;font-weight:950;color:#ec4899;text-align:right}
+.task-dot{width:13px;height:13px;border-radius:50%;background:#ec4899;box-shadow:0 0 0 4px rgba(236,72,153,.15)}
+.task-title{font-size:16px;font-weight:950;color:#1e1b4b;line-height:1.25}
+.task-note{font-size:12px;color:#4b5563;line-height:1.3;margin-top:3px}
+.task-arrow{font-size:28px;color:#a855f7}
+.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:0 16px 18px}
+.feature-card{border:none;border-radius:24px;background:rgba(255,255,255,.88);box-shadow:0 10px 24px rgba(0,0,0,.08);overflow:hidden;text-align:left;color:#1e1b4b}
+.feature-img{height:76px;display:grid;place-items:center;font-size:42px;background:linear-gradient(135deg,#bae6fd,#fdf2f8)}
+.feature-body{padding:12px}
+.feature-body h3{font-size:18px;color:#312e81}
+.feature-body p{font-size:13px;color:#4b5563;line-height:1.35;margin-top:4px}
+.card-section{margin:0 16px 18px;background:rgba(255,255,255,.90);border-radius:28px;padding:18px;box-shadow:0 12px 30px rgba(0,0,0,.08)}
+.card-section h2{color:#ec4899;margin-bottom:8px}
+.rj-result{min-height:58px;border:1px solid #fbcfe8;border-radius:18px;padding:14px;margin:12px 0;background:#fff7fb;color:#312e81;font-weight:800;line-height:1.45}
+.primary-btn{border:none;border-radius:999px;padding:12px 18px;background:linear-gradient(135deg,#fb7185,#f59e0b,#38bdf8,#a78bfa);color:#fff;font-weight:950}
+textarea,input[type=text]{width:100%;border:1px solid #ddd6fe;border-radius:16px;padding:12px;margin-top:8px;font-family:inherit;font-size:14px;background:#fff}
+textarea{min-height:82px}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(255,255,255,.92);backdrop-filter:blur(18px);border-top-left-radius:24px;border-top-right-radius:24px;box-shadow:0 -10px 30px rgba(0,0,0,.12);display:grid;grid-template-columns:repeat(5,1fr);padding:10px 6px 14px;z-index:30}
+.bottom-nav button{border:none;background:transparent;color:#6b5fb5;font-size:22px;font-weight:900}
+.bottom-nav span{display:block;font-size:11px;margin-top:2px}
+.opening-overlay{position:fixed;inset:0;background:rgba(30,27,75,.35);backdrop-filter:blur(8px);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px}
+.opening-overlay.hide{display:none}
+.opening-card{background:rgba(255,255,255,.94);border-radius:32px;padding:24px;text-align:center;box-shadow:0 18px 50px rgba(0,0,0,.2)}
+.opening-card h2{font-size:24px;color:#312e81;margin-bottom:8px}
+.opening-card p{font-size:15px;line-height:1.6;color:#4b5563;margin-bottom:16px}
+@media(max-width:380px){.task-row{grid-template-columns:44px 62px 12px 1fr 12px}.task-title{font-size:14px}.today-title h2{font-size:28px}}
+</style>
+</head>
+<body>
+<div class="opening-overlay" id="openingOverlay">
+  <div class="opening-card">
+    <div style="font-size:46px">🌺</div>
+    <h2>Salam, Hadeer</h2>
+    <p>Vacation Week 6 is for joy, rest, tiny responsibilities, and becoming yourself again.</p>
+    <button class="primary-btn" onclick="document.getElementById('openingOverlay').classList.add('hide')">Start my day ✨</button>
+  </div>
+</div>
+
+<div class="app">
+  <header class="beach-head">
+    <div class="topbar">
+      <button class="circle-btn">☰</button>
+      <button class="circle-btn">🔔</button>
+    </div>
+    <div class="hello">
+      <h1>Salam, Hadeer 🌺</h1>
+      <p>Vacation Week 6 🌴</p>
+    </div>
+  </header>
+
+  <section class="date-card">
+    <div class="date-grid">
+      <div class="date-cell"><div class="date-icon">🗓️</div><div><b id="gregDate">24 May 2026</b><span id="gregDay">Sunday</span></div></div>
+      <div class="date-cell hijri"><div class="date-icon">🌙</div><div><b id="hijriDate">7 Dhul Hijjah</b><span>1447 AH</span></div></div>
+    </div>
+    <div class="clock">🕘 <span id="clockNow">--:--</span> · Cairo, Egypt</div>
+  </section>
+
+  <section class="rest-banner"><div class="heart">💜</div><p>You are not required to earn rest.</p></section>
+
+  <nav class="tabs"><button class="tab-btn active" data-day="sun"><span>Sun</span><small>24 May</small></button><button class="tab-btn " data-day="mon"><span>Mon</span><small>25 May</small></button><button class="tab-btn " data-day="tue"><span>Tue</span><small>26 May</small></button><button class="tab-btn " data-day="wed"><span>Wed</span><small>27 May</small></button><button class="tab-btn " data-day="thu"><span>Thu</span><small>28 May</small></button><button class="tab-btn " data-day="fri"><span>Fri</span><small>29 May</small></button><button class="tab-btn " data-day="sat"><span>Sat</span><small>30 May</small></button></nav>
+
+  <main class="main-card">
+    
+    <section class="day-panel active" id="panel-sun">
+      <div class="today-title">
+        <div>
+          <h2>Sunday ☀️</h2>
+          <p>24 May 2026 · 7 Dhul Hijjah 1447 AH</p>
+        </div>
+        <button class="mode-pill">🏖️ Vacation Mode</button>
+      </div>
+      <div class="hero-task">
+        <div class="hero-icon">🏖️</div>
+        <div>
+          <span>Right now 🌿</span>
+          <h3 id="now-title-sun">MFVA course — 1 hour</h3>
+          <p id="now-note-sun">Keep it light and focused. One hour only.</p>
+        </div>
+        <div class="hero-count">soft</div>
+      </div>
+      <div class="quick-grid">
+        <button onclick="scrollToCard('prayerCard')">☀️<span>Prayer</span></button>
+        <button onclick="scrollToCard('feltGoodCard')">💗<span>Felt Good</span></button>
+        <button onclick="scrollToCard('joyCard')">🎲<span>Joy Ideas</span></button>
+        <button onclick="scrollToCard('memoryCard')">📷<span>Memory</span></button>
+      </div>
+      <div class="now-next">
+        <div><b>Now 🌿</b><span id="now-mini-sun">MFVA course — 1 hour</span></div>
+        <div><b>Later maybe ✨</b><span id="next-mini-sun">Credit case — 2 hours</span></div>
+      </div>
+      <div class="timeline">
+        
+        <label class="task-row work">
+          <input type="checkbox" class="task-check" data-day="sun" data-title="MFVA course — 1 hour">
+          <div class="task-icon">📘</div>
+          <div class="task-time">9:00 AM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">MFVA course — 1 hour</div>
+            <div class="task-note">Keep it light and focused. One hour only.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row work">
+          <input type="checkbox" class="task-check" data-day="sun" data-title="Credit case — 2 hours">
+          <div class="task-icon">💼</div>
+          <div class="task-time">10:30 AM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Credit case — 2 hours</div>
+            <div class="task-note">Finish the core analysis so it is ready for Monday discussion.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="sun" data-title="Brunch / order something nice">
+          <div class="task-icon">🥐</div>
+          <div class="task-time">12:30 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Brunch / order something nice</div>
+            <div class="task-note">Eat properly and make it feel like vacation.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="sun" data-title="Home reset — 30 minutes">
+          <div class="task-icon">🪴</div>
+          <div class="task-time">1:15 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Home reset — 30 minutes</div>
+            <div class="task-note">Small tidy-up only: dishes, laundry, quick room reset.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="sun" data-title="TV / comfort show">
+          <div class="task-icon">📺</div>
+          <div class="task-time">2:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">TV / comfort show</div>
+            <div class="task-note">No guilt. This is part of recovery.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="sun" data-title="Go out or walk">
+          <div class="task-icon">🚶‍♀️</div>
+          <div class="task-time">4:30 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Go out or walk</div>
+            <div class="task-note">Café, mall walk, drive with music, or a simple errand outside.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="sun" data-title="Dinner + movie night">
+          <div class="task-icon">🍿</div>
+          <div class="task-time">7:30 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Dinner + movie night</div>
+            <div class="task-note">At home or outside. Choose what feels fun.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="sun" data-title="Reading + wind down">
+          <div class="task-icon">📖</div>
+          <div class="task-time">10:30 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Reading + wind down</div>
+            <div class="task-note">Read because you want to, not because you should.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+      </div>
+    </section>
+    
+    <section class="day-panel " id="panel-mon">
+      <div class="today-title">
+        <div>
+          <h2>Monday ☀️</h2>
+          <p>25 May 2026 · 8 Dhul Hijjah 1447 AH</p>
+        </div>
+        <button class="mode-pill">🏖️ Vacation Mode</button>
+      </div>
+      <div class="hero-task">
+        <div class="hero-icon">🏖️</div>
+        <div>
+          <span>Right now 🌿</span>
+          <h3 id="now-title-mon">Wake naturally</h3>
+          <p id="now-note-mon">Soft start before the work discussion.</p>
+        </div>
+        <div class="hero-count">soft</div>
+      </div>
+      <div class="quick-grid">
+        <button onclick="scrollToCard('prayerCard')">☀️<span>Prayer</span></button>
+        <button onclick="scrollToCard('feltGoodCard')">💗<span>Felt Good</span></button>
+        <button onclick="scrollToCard('joyCard')">🎲<span>Joy Ideas</span></button>
+        <button onclick="scrollToCard('memoryCard')">📷<span>Memory</span></button>
+      </div>
+      <div class="now-next">
+        <div><b>Now 🌿</b><span id="now-mini-mon">Wake naturally</span></div>
+        <div><b>Later maybe ✨</b><span id="next-mini-mon">Credit case discussion</span></div>
+      </div>
+      <div class="timeline">
+        
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="mon" data-title="Wake naturally">
+          <div class="task-icon">🌤️</div>
+          <div class="task-time">8:00 AM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Wake naturally</div>
+            <div class="task-note">Soft start before the work discussion.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row work">
+          <input type="checkbox" class="task-check" data-day="mon" data-title="Credit case discussion">
+          <div class="task-icon">💼</div>
+          <div class="task-time">9:00 AM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Credit case discussion</div>
+            <div class="task-note">Discuss the case Monday morning, capture only required follow-ups.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row work">
+          <input type="checkbox" class="task-check" data-day="mon" data-title="Light follow-up / send notes">
+          <div class="task-icon">📝</div>
+          <div class="task-time">10:30 AM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Light follow-up / send notes</div>
+            <div class="task-note">Maximum one hour if needed. Then close work mentally.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row work">
+          <input type="checkbox" class="task-check" data-day="mon" data-title="MFVA course — 1 hour">
+          <div class="task-icon">📘</div>
+          <div class="task-time">12:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">MFVA course — 1 hour</div>
+            <div class="task-note">Small daily commitment, then done.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="mon" data-title="Lunch outside or nice meal at home">
+          <div class="task-icon">🍝</div>
+          <div class="task-time">1:30 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Lunch outside or nice meal at home</div>
+            <div class="task-note">Reward yourself for closing the work item.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="mon" data-title="Rest block">
+          <div class="task-icon">🛋️</div>
+          <div class="task-time">3:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Rest block</div>
+            <div class="task-note">Nap, TV, silence, or doing absolutely nothing.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="mon" data-title="Social touchpoint">
+          <div class="task-icon">💬</div>
+          <div class="task-time">5:30 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Social touchpoint</div>
+            <div class="task-note">Call a friend, message someone, or plan an outing.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="mon" data-title="Easy evening">
+          <div class="task-icon">🌙</div>
+          <div class="task-time">8:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Easy evening</div>
+            <div class="task-note">Dinner, series, skincare, reading, peaceful night.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="mon" data-title="Gentle reflection">
+          <div class="task-icon">✨</div>
+          <div class="task-time">10:30 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Gentle reflection</div>
+            <div class="task-note">Today I closed something and protected my week.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+      </div>
+    </section>
+    
+    <section class="day-panel " id="panel-tue">
+      <div class="today-title">
+        <div>
+          <h2>Tuesday ☀️</h2>
+          <p>26 May 2026 · 9 Dhul Hijjah 1447 AH</p>
+        </div>
+        <button class="mode-pill">🏖️ Vacation Mode</button>
+      </div>
+      <div class="hero-task">
+        <div class="hero-icon">🏖️</div>
+        <div>
+          <span>Right now 🌿</span>
+          <h3 id="now-title-tue">Recovery morning</h3>
+          <p id="now-note-tue">No pressure. Let the body slow down after closing the case.</p>
+        </div>
+        <div class="hero-count">soft</div>
+      </div>
+      <div class="quick-grid">
+        <button onclick="scrollToCard('prayerCard')">☀️<span>Prayer</span></button>
+        <button onclick="scrollToCard('feltGoodCard')">💗<span>Felt Good</span></button>
+        <button onclick="scrollToCard('joyCard')">🎲<span>Joy Ideas</span></button>
+        <button onclick="scrollToCard('memoryCard')">📷<span>Memory</span></button>
+      </div>
+      <div class="now-next">
+        <div><b>Now 🌿</b><span id="now-mini-tue">Recovery morning</span></div>
+        <div><b>Later maybe ✨</b><span id="next-mini-tue">MFVA course — 1 hour</span></div>
+      </div>
+      <div class="timeline">
+        
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="tue" data-title="Recovery morning">
+          <div class="task-icon">🌤️</div>
+          <div class="task-time">8:30 AM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Recovery morning</div>
+            <div class="task-note">No pressure. Let the body slow down after closing the case.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row work">
+          <input type="checkbox" class="task-check" data-day="tue" data-title="MFVA course — 1 hour">
+          <div class="task-icon">📘</div>
+          <div class="task-time">10:00 AM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">MFVA course — 1 hour</div>
+            <div class="task-note">Just one hour. Keep the promise small.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="tue" data-title="Home duty — 30 minutes">
+          <div class="task-icon">🪴</div>
+          <div class="task-time">11:30 AM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Home duty — 30 minutes</div>
+            <div class="task-note">Laundry, groceries, light cleaning, or one small task only.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="tue" data-title="Lunch + TV">
+          <div class="task-icon">📺</div>
+          <div class="task-time">1:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Lunch + TV</div>
+            <div class="task-note">Comfort, food, and no optimization.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="tue" data-title="Do absolutely nothing">
+          <div class="task-icon">🛋️</div>
+          <div class="task-time">3:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Do absolutely nothing</div>
+            <div class="task-note">This is intentionally scheduled.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="tue" data-title="Go outside">
+          <div class="task-icon">🚗</div>
+          <div class="task-time">5:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Go outside</div>
+            <div class="task-note">Café, drive, mall walk, bookstore, or cinema plan.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="tue" data-title="Movie / series night">
+          <div class="task-icon">🍿</div>
+          <div class="task-time">8:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Movie / series night</div>
+            <div class="task-note">Choose entertainment without guilt.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="tue" data-title="Read 10 pages">
+          <div class="task-icon">📖</div>
+          <div class="task-time">10:30 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Read 10 pages</div>
+            <div class="task-note">Optional. Stop whenever you want.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+      </div>
+    </section>
+    
+    <section class="day-panel " id="panel-wed">
+      <div class="today-title">
+        <div>
+          <h2>Wednesday ☀️</h2>
+          <p>27 May 2026 · 10 Dhul Hijjah 1447 AH</p>
+        </div>
+        <button class="mode-pill">🏖️ Vacation Mode</button>
+      </div>
+      <div class="hero-task">
+        <div class="hero-icon">🏖️</div>
+        <div>
+          <span>Right now 🌿</span>
+          <h3 id="now-title-wed">Slow start</h3>
+          <p id="now-note-wed">Coffee/tea, Quran, quiet home.</p>
+        </div>
+        <div class="hero-count">soft</div>
+      </div>
+      <div class="quick-grid">
+        <button onclick="scrollToCard('prayerCard')">☀️<span>Prayer</span></button>
+        <button onclick="scrollToCard('feltGoodCard')">💗<span>Felt Good</span></button>
+        <button onclick="scrollToCard('joyCard')">🎲<span>Joy Ideas</span></button>
+        <button onclick="scrollToCard('memoryCard')">📷<span>Memory</span></button>
+      </div>
+      <div class="now-next">
+        <div><b>Now 🌿</b><span id="now-mini-wed">Slow start</span></div>
+        <div><b>Later maybe ✨</b><span id="next-mini-wed">MFVA course — 1 hour</span></div>
+      </div>
+      <div class="timeline">
+        
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="wed" data-title="Slow start">
+          <div class="task-icon">☕</div>
+          <div class="task-time">8:30 AM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Slow start</div>
+            <div class="task-note">Coffee/tea, Quran, quiet home.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row work">
+          <input type="checkbox" class="task-check" data-day="wed" data-title="MFVA course — 1 hour">
+          <div class="task-icon">📘</div>
+          <div class="task-time">10:00 AM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">MFVA course — 1 hour</div>
+            <div class="task-note">Small focused study block only.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="wed" data-title="Plan a joy outing">
+          <div class="task-icon">🎲</div>
+          <div class="task-time">11:30 AM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Plan a joy outing</div>
+            <div class="task-note">Cinema, café, restaurant, or meet someone.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="wed" data-title="Lunch out / treat meal">
+          <div class="task-icon">🍣</div>
+          <div class="task-time">1:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Lunch out / treat meal</div>
+            <div class="task-note">Make the day feel different from work days.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="wed" data-title="Free time outside">
+          <div class="task-icon">🌴</div>
+          <div class="task-time">3:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Free time outside</div>
+            <div class="task-note">Walk, shop, sit in a café, or drive with music.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="wed" data-title="Home reset — 20 minutes">
+          <div class="task-icon">🪴</div>
+          <div class="task-time">6:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Home reset — 20 minutes</div>
+            <div class="task-note">Tiny reset so the home stays peaceful.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="wed" data-title="Social or cinema evening">
+          <div class="task-icon">🎬</div>
+          <div class="task-time">8:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Social or cinema evening</div>
+            <div class="task-note">Choose people or choose a movie. Both count.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="wed" data-title="Wind down slowly">
+          <div class="task-icon">🌙</div>
+          <div class="task-time">11:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Wind down slowly</div>
+            <div class="task-note">No guilt if you sleep late; it is vacation.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+      </div>
+    </section>
+    
+    <section class="day-panel " id="panel-thu">
+      <div class="today-title">
+        <div>
+          <h2>Thursday ☀️</h2>
+          <p>28 May 2026 · 11 Dhul Hijjah 1447 AH</p>
+        </div>
+        <button class="mode-pill">🏖️ Vacation Mode</button>
+      </div>
+      <div class="hero-task">
+        <div class="hero-icon">🏖️</div>
+        <div>
+          <span>Right now 🌿</span>
+          <h3 id="now-title-thu">Late wake-up allowed</h3>
+          <p id="now-note-thu">Let Thursday feel open and soft.</p>
+        </div>
+        <div class="hero-count">soft</div>
+      </div>
+      <div class="quick-grid">
+        <button onclick="scrollToCard('prayerCard')">☀️<span>Prayer</span></button>
+        <button onclick="scrollToCard('feltGoodCard')">💗<span>Felt Good</span></button>
+        <button onclick="scrollToCard('joyCard')">🎲<span>Joy Ideas</span></button>
+        <button onclick="scrollToCard('memoryCard')">📷<span>Memory</span></button>
+      </div>
+      <div class="now-next">
+        <div><b>Now 🌿</b><span id="now-mini-thu">Late wake-up allowed</span></div>
+        <div><b>Later maybe ✨</b><span id="next-mini-thu">MFVA course — 1 hour</span></div>
+      </div>
+      <div class="timeline">
+        
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="thu" data-title="Late wake-up allowed">
+          <div class="task-icon">🌤️</div>
+          <div class="task-time">9:00 AM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Late wake-up allowed</div>
+            <div class="task-note">Let Thursday feel open and soft.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row work">
+          <input type="checkbox" class="task-check" data-day="thu" data-title="MFVA course — 1 hour">
+          <div class="task-icon">📘</div>
+          <div class="task-time">10:30 AM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">MFVA course — 1 hour</div>
+            <div class="task-note">One hour, then close laptop.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="thu" data-title="Home duty — light">
+          <div class="task-icon">🪴</div>
+          <div class="task-time">12:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Home duty — light</div>
+            <div class="task-note">Groceries, laundry, or organizing one area.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="thu" data-title="Lunch + reading">
+          <div class="task-icon">📚</div>
+          <div class="task-time">1:30 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Lunch + reading</div>
+            <div class="task-note">Read something enjoyable, not academic.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="thu" data-title="Rest / nap / silence">
+          <div class="task-icon">🛋️</div>
+          <div class="task-time">3:30 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Rest / nap / silence</div>
+            <div class="task-note">Recovery is the task.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="thu" data-title="Go out for something nice">
+          <div class="task-icon">🧁</div>
+          <div class="task-time">5:30 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Go out for something nice</div>
+            <div class="task-note">Dessert, café, walk, or dinner planning.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="thu" data-title="TV / movie / comfort night">
+          <div class="task-icon">📺</div>
+          <div class="task-time">8:30 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">TV / movie / comfort night</div>
+            <div class="task-note">Soft evening at home if you want.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="thu" data-title="Journal: what felt good?">
+          <div class="task-icon">📝</div>
+          <div class="task-time">10:30 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Journal: what felt good?</div>
+            <div class="task-note">One line is enough.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+      </div>
+    </section>
+    
+    <section class="day-panel " id="panel-fri">
+      <div class="today-title">
+        <div>
+          <h2>Friday ☀️</h2>
+          <p>29 May 2026 · 12 Dhul Hijjah 1447 AH</p>
+        </div>
+        <button class="mode-pill">🏖️ Vacation Mode</button>
+      </div>
+      <div class="hero-task">
+        <div class="hero-icon">🏖️</div>
+        <div>
+          <span>Right now 🌿</span>
+          <h3 id="now-title-fri">Peaceful Friday morning</h3>
+          <p id="now-note-fri">Quran, slow breakfast, calm start.</p>
+        </div>
+        <div class="hero-count">soft</div>
+      </div>
+      <div class="quick-grid">
+        <button onclick="scrollToCard('prayerCard')">☀️<span>Prayer</span></button>
+        <button onclick="scrollToCard('feltGoodCard')">💗<span>Felt Good</span></button>
+        <button onclick="scrollToCard('joyCard')">🎲<span>Joy Ideas</span></button>
+        <button onclick="scrollToCard('memoryCard')">📷<span>Memory</span></button>
+      </div>
+      <div class="now-next">
+        <div><b>Now 🌿</b><span id="now-mini-fri">Peaceful Friday morning</span></div>
+        <div><b>Later maybe ✨</b><span id="next-mini-fri">MFVA course — 1 hour</span></div>
+      </div>
+      <div class="timeline">
+        
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="fri" data-title="Peaceful Friday morning">
+          <div class="task-icon">🌙</div>
+          <div class="task-time">8:30 AM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Peaceful Friday morning</div>
+            <div class="task-note">Quran, slow breakfast, calm start.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row work">
+          <input type="checkbox" class="task-check" data-day="fri" data-title="MFVA course — 1 hour">
+          <div class="task-icon">📘</div>
+          <div class="task-time">10:00 AM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">MFVA course — 1 hour</div>
+            <div class="task-note">Your only structured commitment today.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="fri" data-title="Friday prayer / spiritual reset">
+          <div class="task-icon">🕌</div>
+          <div class="task-time">12:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Friday prayer / spiritual reset</div>
+            <div class="task-note">Let Friday be spiritually grounding.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="fri" data-title="Lunch with a treat">
+          <div class="task-icon">🍽️</div>
+          <div class="task-time">1:30 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Lunch with a treat</div>
+            <div class="task-note">Cook/order/eat out — make it enjoyable.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="fri" data-title="Family call / check-in">
+          <div class="task-icon">📞</div>
+          <div class="task-time">3:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Family call / check-in</div>
+            <div class="task-note">Talk to family in your hometown if you feel like it.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="fri" data-title="Evening outing">
+          <div class="task-icon">🎬</div>
+          <div class="task-time">5:30 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Evening outing</div>
+            <div class="task-note">Cinema, dinner, café, or a drive.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="fri" data-title="Light entertainment">
+          <div class="task-icon">🍿</div>
+          <div class="task-time">8:30 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Light entertainment</div>
+            <div class="task-note">Series, movie, or reading.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="fri" data-title="Gratitude note">
+          <div class="task-icon">✨</div>
+          <div class="task-time">11:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Gratitude note</div>
+            <div class="task-note">What made me feel more like myself today?</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+      </div>
+    </section>
+    
+    <section class="day-panel " id="panel-sat">
+      <div class="today-title">
+        <div>
+          <h2>Saturday ☀️</h2>
+          <p>30 May 2026 · 13 Dhul Hijjah 1447 AH</p>
+        </div>
+        <button class="mode-pill">🏖️ Vacation Mode</button>
+      </div>
+      <div class="hero-task">
+        <div class="hero-icon">🏖️</div>
+        <div>
+          <span>Right now 🌿</span>
+          <h3 id="now-title-sat">Sleep in + slow morning</h3>
+          <p id="now-note-sat">Last vacation day. No rushing.</p>
+        </div>
+        <div class="hero-count">soft</div>
+      </div>
+      <div class="quick-grid">
+        <button onclick="scrollToCard('prayerCard')">☀️<span>Prayer</span></button>
+        <button onclick="scrollToCard('feltGoodCard')">💗<span>Felt Good</span></button>
+        <button onclick="scrollToCard('joyCard')">🎲<span>Joy Ideas</span></button>
+        <button onclick="scrollToCard('memoryCard')">📷<span>Memory</span></button>
+      </div>
+      <div class="now-next">
+        <div><b>Now 🌿</b><span id="now-mini-sat">Sleep in + slow morning</span></div>
+        <div><b>Later maybe ✨</b><span id="next-mini-sat">MFVA course — 1 hour</span></div>
+      </div>
+      <div class="timeline">
+        
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="sat" data-title="Sleep in + slow morning">
+          <div class="task-icon">🌤️</div>
+          <div class="task-time">9:00 AM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Sleep in + slow morning</div>
+            <div class="task-note">Last vacation day. No rushing.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row work">
+          <input type="checkbox" class="task-check" data-day="sat" data-title="MFVA course — 1 hour">
+          <div class="task-icon">📘</div>
+          <div class="task-time">10:30 AM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">MFVA course — 1 hour</div>
+            <div class="task-note">Close the week gently, no extra studying.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="sat" data-title="Home reset for next week">
+          <div class="task-icon">🪴</div>
+          <div class="task-time">12:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Home reset for next week</div>
+            <div class="task-note">Light cleaning, laundry, groceries, bag/work prep.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="sat" data-title="Favorite meal">
+          <div class="task-icon">🍝</div>
+          <div class="task-time">1:30 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Favorite meal</div>
+            <div class="task-note">End the week with something you enjoy.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="sat" data-title="Memory capsule time">
+          <div class="task-icon">📷</div>
+          <div class="task-time">3:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Memory capsule time</div>
+            <div class="task-note">What did this week teach you about rest?</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="sat" data-title="Final outing / walk">
+          <div class="task-icon">🌴</div>
+          <div class="task-time">5:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Final outing / walk</div>
+            <div class="task-note">End with fresh air, café, or a small adventure.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row joy">
+          <input type="checkbox" class="task-check" data-day="sat" data-title="Comfort evening">
+          <div class="task-icon">🛋️</div>
+          <div class="task-time">8:00 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Comfort evening</div>
+            <div class="task-note">Movie, skincare, reading, peaceful home.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+
+        <label class="task-row soft">
+          <input type="checkbox" class="task-check" data-day="sat" data-title="Soft preparation for return">
+          <div class="task-icon">🌙</div>
+          <div class="task-time">10:30 PM</div>
+          <div class="task-dot"></div>
+          <div class="task-main">
+            <div class="task-title">Soft preparation for return</div>
+            <div class="task-note">No panic. Just gentle transition back to life.</div>
+          </div>
+          <div class="task-arrow">›</div>
+        </label>
+      </div>
+    </section>
+    
+  </main>
+
+  <section class="feature-grid">
+    <button class="feature-card" onclick="scrollToCard('joyCard')"><div class="feature-img">🌴</div><div class="feature-body"><h3>Joy Ideas</h3><p>61 fun ideas to enjoy today</p></div></button>
+    <button class="feature-card" onclick="scrollToCard('memoryCard')"><div class="feature-img">📷</div><div class="feature-body"><h3>Memory Capsule</h3><p>Save your favorite moments</p></div></button>
+    <button class="feature-card" onclick="scrollToCard('feltGoodCard')"><div class="feature-img">🐚</div><div class="feature-body"><h3>Reflection</h3><p>Did I feel more like myself today?</p></div></button>
+    <button class="feature-card" onclick="scrollToCard('moodCard')"><div class="feature-img">⭐</div><div class="feature-body"><h3>Mood & Energy</h3><p>Check in with yourself</p></div></button>
+  </section>
+
+  <section class="card-section" id="joyCard"><h2>🎲 Random Joy Generator</h2><p>Tap when you don’t know what to do.</p><div class="rj-result" id="joyResult">Let the day choose something soft for you.</div><button class="primary-btn" onclick="randomJoy()">Give me a joy idea ✨</button></section>
+
+  <section class="card-section" id="prayerCard"><h2>☀️ Prayer & calm</h2><p style="line-height:1.6;color:#4b5563">Use this as a soft spiritual pause. Quran, Zekr, or a slow prayer all count.</p><textarea placeholder="Today’s good deed or spiritual note..."></textarea></section>
+
+  <section class="card-section" id="feltGoodCard"><h2>💗 Felt Good Journal</h2><p>Today felt good because...</p><textarea placeholder="I laughed, rested, watched something fun, prayed calmly..."></textarea></section>
+
+  <section class="card-section" id="moodCard"><h2>⭐ Mood & Energy</h2><p>Check in softly. No judgment.</p><textarea placeholder="My mood today is..."></textarea></section>
+
+  <section class="card-section" id="memoryCard"><h2>📷 Memory Capsule</h2>
+    <input type="text" placeholder="Favorite moment">
+    <input type="text" placeholder="Best outing">
+    <input type="text" placeholder="What relaxed me most?">
+    <textarea placeholder="What did this week teach me about myself?"></textarea>
+    <textarea placeholder="What do I want to keep after vacation?"></textarea>
+  </section>
+</div>
+
+<nav class="bottom-nav">
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})">🏠<span>Home</span></button>
+  <button onclick="document.querySelector('.main-card').scrollIntoView({behavior:'smooth'})">🗓️<span>Week Plan</span></button>
+  <button onclick="scrollToCard('joyCard')">🌴<span>Joy</span></button>
+  <button onclick="scrollToCard('moodCard')">◔<span>Mood</span></button>
+  <button onclick="scrollToCard('memoryCard')">👤<span>Me</span></button>
+</nav>
+
+<script>
+const plans = {"sun": [["9:00 AM", "MFVA course \u2014 1 hour", "Keep it light and focused. One hour only.", "\ud83d\udcd8", "work"], ["10:30 AM", "Credit case \u2014 2 hours", "Finish the core analysis so it is ready for Monday discussion.", "\ud83d\udcbc", "work"], ["12:30 PM", "Brunch / order something nice", "Eat properly and make it feel like vacation.", "\ud83e\udd50", "joy"], ["1:15 PM", "Home reset \u2014 30 minutes", "Small tidy-up only: dishes, laundry, quick room reset.", "\ud83e\udeb4", "soft"], ["2:00 PM", "TV / comfort show", "No guilt. This is part of recovery.", "\ud83d\udcfa", "joy"], ["4:30 PM", "Go out or walk", "Caf\u00e9, mall walk, drive with music, or a simple errand outside.", "\ud83d\udeb6\u200d\u2640\ufe0f", "joy"], ["7:30 PM", "Dinner + movie night", "At home or outside. Choose what feels fun.", "\ud83c\udf7f", "joy"], ["10:30 PM", "Reading + wind down", "Read because you want to, not because you should.", "\ud83d\udcd6", "soft"]], "mon": [["8:00 AM", "Wake naturally", "Soft start before the work discussion.", "\ud83c\udf24\ufe0f", "soft"], ["9:00 AM", "Credit case discussion", "Discuss the case Monday morning, capture only required follow-ups.", "\ud83d\udcbc", "work"], ["10:30 AM", "Light follow-up / send notes", "Maximum one hour if needed. Then close work mentally.", "\ud83d\udcdd", "work"], ["12:00 PM", "MFVA course \u2014 1 hour", "Small daily commitment, then done.", "\ud83d\udcd8", "work"], ["1:30 PM", "Lunch outside or nice meal at home", "Reward yourself for closing the work item.", "\ud83c\udf5d", "joy"], ["3:00 PM", "Rest block", "Nap, TV, silence, or doing absolutely nothing.", "\ud83d\udecb\ufe0f", "soft"], ["5:30 PM", "Social touchpoint", "Call a friend, message someone, or plan an outing.", "\ud83d\udcac", "joy"], ["8:00 PM", "Easy evening", "Dinner, series, skincare, reading, peaceful night.", "\ud83c\udf19", "joy"], ["10:30 PM", "Gentle reflection", "Today I closed something and protected my week.", "\u2728", "soft"]], "tue": [["8:30 AM", "Recovery morning", "No pressure. Let the body slow down after closing the case.", "\ud83c\udf24\ufe0f", "soft"], ["10:00 AM", "MFVA course \u2014 1 hour", "Just one hour. Keep the promise small.", "\ud83d\udcd8", "work"], ["11:30 AM", "Home duty \u2014 30 minutes", "Laundry, groceries, light cleaning, or one small task only.", "\ud83e\udeb4", "soft"], ["1:00 PM", "Lunch + TV", "Comfort, food, and no optimization.", "\ud83d\udcfa", "joy"], ["3:00 PM", "Do absolutely nothing", "This is intentionally scheduled.", "\ud83d\udecb\ufe0f", "soft"], ["5:00 PM", "Go outside", "Caf\u00e9, drive, mall walk, bookstore, or cinema plan.", "\ud83d\ude97", "joy"], ["8:00 PM", "Movie / series night", "Choose entertainment without guilt.", "\ud83c\udf7f", "joy"], ["10:30 PM", "Read 10 pages", "Optional. Stop whenever you want.", "\ud83d\udcd6", "soft"]], "wed": [["8:30 AM", "Slow start", "Coffee/tea, Quran, quiet home.", "\u2615", "soft"], ["10:00 AM", "MFVA course \u2014 1 hour", "Small focused study block only.", "\ud83d\udcd8", "work"], ["11:30 AM", "Plan a joy outing", "Cinema, caf\u00e9, restaurant, or meet someone.", "\ud83c\udfb2", "joy"], ["1:00 PM", "Lunch out / treat meal", "Make the day feel different from work days.", "\ud83c\udf63", "joy"], ["3:00 PM", "Free time outside", "Walk, shop, sit in a caf\u00e9, or drive with music.", "\ud83c\udf34", "joy"], ["6:00 PM", "Home reset \u2014 20 minutes", "Tiny reset so the home stays peaceful.", "\ud83e\udeb4", "soft"], ["8:00 PM", "Social or cinema evening", "Choose people or choose a movie. Both count.", "\ud83c\udfac", "joy"], ["11:00 PM", "Wind down slowly", "No guilt if you sleep late; it is vacation.", "\ud83c\udf19", "soft"]], "thu": [["9:00 AM", "Late wake-up allowed", "Let Thursday feel open and soft.", "\ud83c\udf24\ufe0f", "soft"], ["10:30 AM", "MFVA course \u2014 1 hour", "One hour, then close laptop.", "\ud83d\udcd8", "work"], ["12:00 PM", "Home duty \u2014 light", "Groceries, laundry, or organizing one area.", "\ud83e\udeb4", "soft"], ["1:30 PM", "Lunch + reading", "Read something enjoyable, not academic.", "\ud83d\udcda", "joy"], ["3:30 PM", "Rest / nap / silence", "Recovery is the task.", "\ud83d\udecb\ufe0f", "soft"], ["5:30 PM", "Go out for something nice", "Dessert, caf\u00e9, walk, or dinner planning.", "\ud83e\uddc1", "joy"], ["8:30 PM", "TV / movie / comfort night", "Soft evening at home if you want.", "\ud83d\udcfa", "joy"], ["10:30 PM", "Journal: what felt good?", "One line is enough.", "\ud83d\udcdd", "soft"]], "fri": [["8:30 AM", "Peaceful Friday morning", "Quran, slow breakfast, calm start.", "\ud83c\udf19", "soft"], ["10:00 AM", "MFVA course \u2014 1 hour", "Your only structured commitment today.", "\ud83d\udcd8", "work"], ["12:00 PM", "Friday prayer / spiritual reset", "Let Friday be spiritually grounding.", "\ud83d\udd4c", "soft"], ["1:30 PM", "Lunch with a treat", "Cook/order/eat out \u2014 make it enjoyable.", "\ud83c\udf7d\ufe0f", "joy"], ["3:00 PM", "Family call / check-in", "Talk to family in your hometown if you feel like it.", "\ud83d\udcde", "joy"], ["5:30 PM", "Evening outing", "Cinema, dinner, caf\u00e9, or a drive.", "\ud83c\udfac", "joy"], ["8:30 PM", "Light entertainment", "Series, movie, or reading.", "\ud83c\udf7f", "joy"], ["11:00 PM", "Gratitude note", "What made me feel more like myself today?", "\u2728", "soft"]], "sat": [["9:00 AM", "Sleep in + slow morning", "Last vacation day. No rushing.", "\ud83c\udf24\ufe0f", "soft"], ["10:30 AM", "MFVA course \u2014 1 hour", "Close the week gently, no extra studying.", "\ud83d\udcd8", "work"], ["12:00 PM", "Home reset for next week", "Light cleaning, laundry, groceries, bag/work prep.", "\ud83e\udeb4", "soft"], ["1:30 PM", "Favorite meal", "End the week with something you enjoy.", "\ud83c\udf5d", "joy"], ["3:00 PM", "Memory capsule time", "What did this week teach you about rest?", "\ud83d\udcf7", "soft"], ["5:00 PM", "Final outing / walk", "End with fresh air, caf\u00e9, or a small adventure.", "\ud83c\udf34", "joy"], ["8:00 PM", "Comfort evening", "Movie, skincare, reading, peaceful home.", "\ud83d\udecb\ufe0f", "joy"], ["10:30 PM", "Soft preparation for return", "No panic. Just gentle transition back to life.", "\ud83c\udf19", "soft"]]};
+const dates = {"sun": "24 May 2026", "mon": "25 May 2026", "tue": "26 May 2026", "wed": "27 May 2026", "thu": "28 May 2026", "fri": "29 May 2026", "sat": "30 May 2026"};
+const hijri = {"sun": "7 Dhul Hijjah 1447 AH", "mon": "8 Dhul Hijjah 1447 AH", "tue": "9 Dhul Hijjah 1447 AH", "wed": "10 Dhul Hijjah 1447 AH", "thu": "11 Dhul Hijjah 1447 AH", "fri": "12 Dhul Hijjah 1447 AH", "sat": "13 Dhul Hijjah 1447 AH"};
+const dayNames = {"sun": "Sunday", "mon": "Monday", "tue": "Tuesday", "wed": "Wednesday", "thu": "Thursday", "fri": "Friday", "sat": "Saturday"};
+const joyIdeas = ["🎬 Go watch a random movie at the cinema.", "☕ Try a café you never entered before.", "📚 Read only 10 pages of a novel.", "🚗 Drive with music and no destination.", "🍣 Eat somewhere new.", "📞 Call someone you miss.", "🌙 Pray slowly tonight.", "🛍️ Walk around aimlessly for 30 minutes.", "🎧 Listen to an old favorite song.", "🍿 Watch TV with zero guilt.", "🧁 Buy dessert because you feel like it.", "🌿 Sit in silence for 15 minutes.", "📖 Re-read a favorite quote or passage.", "🌇 Watch sunset from somewhere open.", "🛏️ Take a guilt-free nap.", "🎨 Buy cute stationery or a tiny thing you like.", "🍵 Make tea or coffee and drink it slowly.", "🧴 Do skincare while watching a comfort show.", "🕯️ Light a candle tonight.", "🎼 Listen to instrumental music only.", "🚶 Walk while leaving your phone in your bag.", "🍕 Order your comfort food.", "📷 Take random aesthetic photos today.", "🧺 Fold laundry slowly with music.", "🌸 Wear something that makes you feel pretty.", "🎥 Rewatch a childhood movie.", "📔 Write one honest page in a journal.", "🌃 Go out at night just for fresh air.", "🧃 Buy a drink you usually skip.", "🧠 Daydream without correcting yourself.", "📱 Clean your photo gallery gently.", "🕌 Read Quran quietly for 10 minutes.", "🎤 Sing along loudly in the car.", "🪴 Sit near sunlight for a while.", "🍰 Try dessert from a new place.", "📺 Watch an old sitcom episode.", "🛒 Browse a bookstore without buying anything.", "💌 Message someone you appreciate.", "💤 Sleep earlier tonight if your body wants it.", "🍳 Cook something simple and comforting.", "🌙 Watch the night sky for 5 minutes.", "🎀 Organize one tiny corner only.", "🎵 Make a soft Week 6 playlist.", "🧋 Try a new iced coffee flavor.", "🍔 Eat outside instead of at home.", "🎞️ Watch a nostalgic YouTube video.", "📓 Write what made you smile today.", "💆 Give yourself a mini spa evening.", "🪞 Take selfies just for yourself.", "🧠 Let yourself do nothing for one hour.", "🕊️ Sit after prayer without rushing away.", "🎭 Wear perfume even if staying home.", "📚 Visit a library or bookstore.", "🥐 Have breakfast somewhere cozy.", "🌧️ Listen to rain sounds while resting.", "🎯 Spend 20 minutes on a hobby.", "🫶 Compliment yourself out loud once today.", "🌿 Open the windows and reset the room atmosphere.", "🍿 Start a comfort movie trilogy night.", "🎮 Play something fun with zero productivity value.", "✨ Make tonight feel softer than yesterday."];
+let activeDay='sun';
+
+function scrollToCard(id){ const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }
+function randomJoy(){ document.getElementById('joyResult').textContent = joyIdeas[Math.floor(Math.random()*joyIdeas.length)]; }
+
+function cairoNow(){ return new Date(new Date().toLocaleString('en-US',{timeZone:'Africa/Cairo'})); }
+function updateClock(){
+ const now=cairoNow();
+ document.getElementById('clockNow').textContent = now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true});
+}
+function setDay(d){
+ activeDay=d;
+ document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.day===d));
+ document.querySelectorAll('.day-panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+d));
+ const [day,month,year] = dates[d].split(' ');
+ document.getElementById('gregDate').textContent = dates[d];
+ document.getElementById('gregDay').textContent = dayNames[d];
+ document.getElementById('hijriDate').textContent = hijri[d].replace(' 1447 AH','');
+ updateNowNext();
+}
+function parseMinutes(t){
+ const m=t.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i); if(!m) return 0;
+ let h=parseInt(m[1]), min=parseInt(m[2]); const ap=m[3].toUpperCase();
+ if(ap==='PM' && h<12) h+=12; if(ap==='AM' && h===12) h=0; return h*60+min;
+}
+function updateNowNext(){
+ const now=cairoNow(); const mins=now.getHours()*60+now.getMinutes();
+ let arr=plans[activeDay], cur=arr[0], nxt=arr[1]||arr[0];
+ for(let i=0;i<arr.length;i++){ if(parseMinutes(arr[i][0])<=mins) cur=arr[i]; if(parseMinutes(arr[i][0])>mins){nxt=arr[i]; break;} }
+ const d=activeDay;
+ ['now-title-'+d,'now-mini-'+d].forEach(id=>{ const e=document.getElementById(id); if(e)e.textContent=cur[1]; });
+ const note=document.getElementById('now-note-'+d); if(note) note.textContent=cur[2];
+ const next=document.getElementById('next-mini-'+d); if(next) next.textContent=nxt[1];
+}
+document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>setDay(b.dataset.day)));
+document.querySelectorAll('input,textarea').forEach((el,i)=>{
+ const key='week6_beach_'+i; try{ const v=localStorage.getItem(key); if(v!==null){ if(el.type==='checkbox') el.checked=v==='1'; else el.value=v; }
+ el.addEventListener('change',()=>localStorage.setItem(key, el.type==='checkbox'?(el.checked?'1':'0'):el.value));
+ el.addEventListener('input',()=>localStorage.setItem(key, el.value));
+ }catch(e){}
+});
+setDay('sun'); updateClock(); setInterval(()=>{updateClock(); updateNowNext();},1000);
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));}</script>
+</body>
+</html>
